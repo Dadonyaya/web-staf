@@ -120,6 +120,11 @@ export default function AdminPage() {
     return lower.startsWith('ram') || lower.startsWith('admin');
   };
 
+  const getNamesByEmail = (email) => {
+    const found = users.find(u => u.email && u.email.toLowerCase() === email.toLowerCase());
+    return { prenom: found?.prenom || '', nom: found?.nom || '' };
+  };
+
   if (!isAdmin) {
     return (
       <div className="min-h-screen flex items-center justify-center text-ramRed font-semibold text-xl">
@@ -215,8 +220,6 @@ export default function AdminPage() {
                       className="font-bold uppercase text-xs tracking-wide select-none"
                       style={{ background: '#C4002A', color: '#fff', userSelect: 'none', cursor: 'default' }}
                     >
-                      <th className="px-4 py-3 text-left font-semibold whitespace-nowrap">Prénom</th>
-                      <th className="px-4 py-3 text-left font-semibold whitespace-nowrap">Nom</th>
                       <th className="px-4 py-3 text-left font-semibold whitespace-nowrap">Badge</th>
                       <th className="px-4 py-3 text-left font-semibold whitespace-nowrap">Firebase UID</th>
                     </tr>
@@ -228,8 +231,6 @@ export default function AdminPage() {
                       className="border-b border-[#ececec] bg-white hover:bg-[#F8E6EA]/55 cursor-default transition-colors"
                       style={{ transition: 'background 0.14s cubic-bezier(0.23, 1, 0.32, 1)' }}
                     >
-                      <td className="py-2 px-4">{u.prenom}</td>
-                      <td className="py-2 px-4">{u.nom}</td>
                       <td className="py-2 px-4 truncate">{u.badge || u.email?.split('@')[0]}</td>
                       <td className="py-2 px-4 font-mono text-xs select-all relative">
                         <span className="inline-block pr-7">
@@ -308,8 +309,15 @@ export default function AdminPage() {
                       className="border-b border-[#ececec] bg-white hover:bg-[#F8E6EA]/55 cursor-default transition-colors"
                       style={{ transition: 'background 0.14s cubic-bezier(0.23, 1, 0.32, 1)' }}
                     >
-                      <td className="py-2 px-4">{u.prenom}</td>
-                      <td className="py-2 px-4">{u.nom}</td>
+                      {(() => {
+                        const info = getNamesByEmail(u.email);
+                        return (
+                          <>
+                            <td className="py-2 px-4">{info.prenom}</td>
+                            <td className="py-2 px-4">{info.nom}</td>
+                          </>
+                        );
+                      })()}
                       <td className="py-2 px-4 truncate">{u.email}</td>
                       <td className="py-2 px-4 font-mono text-xs select-all relative">
                         <span className="inline-block pr-7">
