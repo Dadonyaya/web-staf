@@ -4,7 +4,7 @@ import axios from 'axios';
 import { BACKEND_URL, auth } from '../firebase';
 import Zoom from 'react-medium-image-zoom';
 import 'react-medium-image-zoom/dist/styles.css';
-import { ArrowLeftIcon } from '@heroicons/react/24/outline';
+import { XMarkIcon } from '@heroicons/react/24/outline';
 
 function FadeInDiv({ children, delay = 0, className = "" }) {
   return (
@@ -27,7 +27,6 @@ export default function DetailBagagePage() {
   const navigate = useNavigate();
   const [bagage, setBagage] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [actionLoading, setActionLoading] = useState(false);
 
   const fetchBagage = async () => {
     try {
@@ -47,34 +46,18 @@ export default function DetailBagagePage() {
     fetchBagage();
   }, [id]);
 
-  const handleSignalement = async (type) => {
-    setActionLoading(true);
-    try {
-      const token = await auth.currentUser.getIdToken();
-      await axios.post(`${BACKEND_URL}/bagages/${id}/${type}`, {}, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      await fetchBagage();
-    } catch (err) {
-      alert("Erreur lors de l'action.");
-    } finally {
-      setActionLoading(false);
-    }
-  };
 
   return (
-    <div className="min-h-screen" style={{ background: "#F5F6FA", fontFamily: "Montserrat, Arial, sans-serif" }}>
-      {/* Header */}
-      <FadeInDiv delay={80}>
-        <div className="flex items-end px-7 pt-7 pb-2 bg-white border-b" style={{ borderBottom: "1.5px solid #ececec", marginLeft: -8, paddingRight: 24 }}>
-          <button className="mr-3 p-1 rounded-none hover:bg-[#f7f8fa]" onClick={() => navigate(-1)} aria-label="Retour">
-            <ArrowLeftIcon className="w-4 h-4 text-gray-400" />
-          </button>
+    <div className="fixed inset-0 bg-black/40 flex items-start justify-center p-4 z-50" style={{ fontFamily: 'Montserrat, Arial, sans-serif' }}>
+      <div className="bg-white rounded-md w-full max-w-lg mx-auto overflow-auto" style={{ maxHeight: '90vh' }}>
+        <div className="flex items-center justify-between px-7 pt-6 pb-2 border-b" style={{ borderBottom: '1.5px solid #ececec' }}>
           <h1 className="text-[1.12rem] font-bold text-[#C4002A] tracking-tight uppercase" style={{ letterSpacing: '0.7px' }}>
             Détail du bagage
           </h1>
+          <button className="p-1 rounded hover:bg-gray-100" onClick={() => navigate(-1)} aria-label="Fermer">
+            <XMarkIcon className="w-5 h-5 text-gray-400" />
+          </button>
         </div>
-      </FadeInDiv>
 
       {/* Contenu principal */}
       <FadeInDiv delay={210}>
@@ -139,30 +122,12 @@ export default function DetailBagagePage() {
                     </div>
                   </div>
                 )}
-                <div className="mt-6">
-                  {bagage.etatSignalement === 'PERDU' ? (
-                    <button
-                      onClick={() => handleSignalement('signaler-retrouve')}
-                      disabled={actionLoading}
-                      className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded text-sm transition-all"
-                    >
-                      {actionLoading ? "Traitement..." : "Signaler retrouvé"}
-                    </button>
-                  ) : (
-                    <button
-                      onClick={() => handleSignalement('signaler-perdu')}
-                      disabled={actionLoading}
-                      className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded text-sm transition-all"
-                    >
-                      {actionLoading ? "Traitement..." : "Signaler perdu"}
-                    </button>
-                  )}
-                </div>
               </div>
             )}
           </div>
         </div>
       </FadeInDiv>
     </div>
+  </div>
   );
 }
