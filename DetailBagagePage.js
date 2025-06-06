@@ -48,8 +48,16 @@ export default function DetailBagagePage() {
 
 
   return (
-    <div className="fixed inset-0 bg-black/40 flex items-start justify-center p-4 z-50" style={{ fontFamily: 'Montserrat, Arial, sans-serif' }}>
-      <div className="bg-white rounded-md w-full max-w-lg mx-auto overflow-auto" style={{ maxHeight: '90vh' }}>
+    <div
+      className="fixed inset-0 bg-black/40 flex items-center justify-center p-4 z-50 animate-fadeIn"
+      onClick={() => navigate(-1)}
+      style={{ fontFamily: 'Montserrat, Arial, sans-serif' }}
+    >
+      <div
+        onClick={e => e.stopPropagation()}
+        className="bg-white rounded-xl shadow-2xl w-full max-w-3xl mx-auto overflow-auto p-8 md:p-10 animate-fadeInUp"
+        style={{ maxHeight: '90vh' }}
+      >
         <div className="flex items-center justify-between px-7 pt-6 pb-2 border-b" style={{ borderBottom: '1.5px solid #ececec' }}>
           <h1 className="text-[1.12rem] font-bold text-[#C4002A] tracking-tight uppercase" style={{ letterSpacing: '0.7px' }}>
             Détail du bagage

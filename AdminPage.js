@@ -94,7 +94,8 @@ export default function AdminPage() {
         badge: badge.toLowerCase(),
         password,
         nom,
-        prenom
+        prenom,
+        type: 'staff'
       }, {
         headers: { Authorization: `Bearer ${token}` }
       });
@@ -112,10 +113,11 @@ export default function AdminPage() {
     }
   };
 
-  const isStaffUser = (email) => {
-    if (!email) return false;
-    const lower = email.toLowerCase();
-    return lower.startsWith("ram") || lower.startsWith("admin");
+  const isStaffUser = (user) => {
+    if (!user) return false;
+    if (user.type === 'staff') return true;
+    const lower = user.email?.toLowerCase() || '';
+    return lower.startsWith('ram') || lower.startsWith('admin');
   };
 
   if (!isAdmin) {
@@ -126,8 +128,8 @@ export default function AdminPage() {
     );
   }
 
-  const staffUsers = users.filter(u => isStaffUser(u.email));
-  const normalUsers = users.filter(u => !isStaffUser(u.email));
+  const staffUsers = users.filter(u => isStaffUser(u));
+  const normalUsers = users.filter(u => !isStaffUser(u));
 
   const staffTotalPages = Math.ceil(staffUsers.length / ITEMS_PER_PAGE) || 1;
   const paginatedStaff = staffUsers.slice(
@@ -205,20 +207,29 @@ export default function AdminPage() {
             ) : staffUsers.length === 0 ? (
               <div>Aucun staff trouvé.</div>
             ) : (
-              <table className="w-full text-left text-gray-900 text-sm border-separate border-spacing-y-1">
-                <thead>
-                  <tr className="border-b border-gray-300">
-                    <th className="py-2 px-4">Badge</th>
-                    <th className="py-2 px-4">Firebase UID</th>
-                  </tr>
-                </thead>
-                <tbody>
+              <>
+              <div className="overflow-x-auto border border-[#ececec] bg-white animate-fadeIn rounded-none shadow-none">
+                <table className="min-w-full text-[15px] font-medium" style={{ fontFamily: 'Montserrat, Arial, sans-serif' }}>
+                  <thead>
+                    <tr
+                      className="font-bold uppercase text-xs tracking-wide select-none"
+                      style={{ background: '#C4002A', color: '#fff', userSelect: 'none', cursor: 'default' }}
+                    >
+                      <th className="px-4 py-3 text-left font-semibold whitespace-nowrap">Prénom</th>
+                      <th className="px-4 py-3 text-left font-semibold whitespace-nowrap">Nom</th>
+                      <th className="px-4 py-3 text-left font-semibold whitespace-nowrap">Badge</th>
+                      <th className="px-4 py-3 text-left font-semibold whitespace-nowrap">Firebase UID</th>
+                    </tr>
+                  </thead>
+                  <tbody>
                   {paginatedStaff.map(u => (
                     <tr
                       key={u.uid}
-                      className="hover:bg-gray-100 cursor-default rounded"
-                      style={{ transition: "background-color 0.3s" }}
+                      className="border-b border-[#ececec] bg-white hover:bg-[#F8E6EA]/55 cursor-default transition-colors"
+                      style={{ transition: 'background 0.14s cubic-bezier(0.23, 1, 0.32, 1)' }}
                     >
+                      <td className="py-2 px-4">{u.prenom}</td>
+                      <td className="py-2 px-4">{u.nom}</td>
                       <td className="py-2 px-4 truncate">{u.badge || u.email?.split('@')[0]}</td>
                       <td className="py-2 px-4 font-mono text-xs select-all relative">
                         <span className="inline-block pr-7">
@@ -240,8 +251,9 @@ export default function AdminPage() {
                       </td>
                     </tr>
                   ))}
-                </tbody>
-              </table>
+                  </tbody>
+                </table>
+              </div>
               <div className="flex justify-center items-center mt-4 gap-2">
                 <button
                   onClick={() => setStaffPage(p => Math.max(1, p - 1))}
@@ -263,6 +275,7 @@ export default function AdminPage() {
                   <ChevronRightIcon className="h-5 w-5 ml-1 text-ramRed" />
                 </button>
               </div>
+              </>
             )}
           </section>
 
@@ -274,21 +287,26 @@ export default function AdminPage() {
             ) : normalUsers.length === 0 ? (
               <div>Aucun utilisateur trouvé.</div>
             ) : (
-              <table className="w-full text-left text-gray-900 text-sm border-separate border-spacing-y-1">
-                <thead>
-                  <tr className="border-b border-gray-300">
-                    <th className="py-2 px-4">Prénom</th>
-                    <th className="py-2 px-4">Nom</th>
-                    <th className="py-2 px-4">Email</th>
-                    <th className="py-2 px-4">Firebase UID</th>
-                  </tr>
-                </thead>
-                <tbody>
+              <>
+              <div className="overflow-x-auto border border-[#ececec] bg-white animate-fadeIn rounded-none shadow-none">
+                <table className="min-w-full text-[15px] font-medium" style={{ fontFamily: 'Montserrat, Arial, sans-serif' }}>
+                  <thead>
+                    <tr
+                      className="font-bold uppercase text-xs tracking-wide select-none"
+                      style={{ background: '#C4002A', color: '#fff', userSelect: 'none', cursor: 'default' }}
+                    >
+                      <th className="px-4 py-3 text-left font-semibold whitespace-nowrap">Prénom</th>
+                      <th className="px-4 py-3 text-left font-semibold whitespace-nowrap">Nom</th>
+                      <th className="px-4 py-3 text-left font-semibold whitespace-nowrap">Email</th>
+                      <th className="px-4 py-3 text-left font-semibold whitespace-nowrap">Firebase UID</th>
+                    </tr>
+                  </thead>
+                  <tbody>
                   {paginatedUsers.map(u => (
                     <tr
                       key={u.uid}
-                      className="hover:bg-gray-100 cursor-default rounded"
-                      style={{ transition: "background-color 0.3s" }}
+                      className="border-b border-[#ececec] bg-white hover:bg-[#F8E6EA]/55 cursor-default transition-colors"
+                      style={{ transition: 'background 0.14s cubic-bezier(0.23, 1, 0.32, 1)' }}
                     >
                       <td className="py-2 px-4">{u.prenom}</td>
                       <td className="py-2 px-4">{u.nom}</td>
@@ -313,8 +331,9 @@ export default function AdminPage() {
                       </td>
                     </tr>
                   ))}
-                </tbody>
-              </table>
+                  </tbody>
+                </table>
+              </div>
               <div className="flex justify-center items-center mt-4 gap-2">
                 <button
                   onClick={() => setUserPage(p => Math.max(1, p - 1))}
@@ -336,6 +355,7 @@ export default function AdminPage() {
                   <ChevronRightIcon className="h-5 w-5 ml-1 text-ramRed" />
                 </button>
               </div>
+              </>
             )}
           </section>
         </FadeInDiv>
@@ -351,8 +371,14 @@ export default function AdminPage() {
           </button>
         </FadeInDiv>
         {openModal && (
-          <div className="fixed inset-0 bg-black/40 flex items-center justify-center p-4 z-50">
-            <div className="bg-white rounded-md w-full max-w-sm p-6 max-h-[85vh] overflow-auto">
+          <div
+            className="fixed inset-0 bg-black/40 flex items-center justify-center p-4 z-50 animate-fadeIn"
+            onClick={() => setOpenModal(false)}
+          >
+            <div
+              onClick={e => e.stopPropagation()}
+              className="bg-white rounded-xl shadow-2xl w-full max-w-lg p-8 md:p-10 max-h-[90vh] overflow-auto animate-fadeInUp"
+            >
               <div className="flex justify-between items-center mb-4">
                 <h2 className="text-lg font-semibold text-ramRed">Créer un compte Staff</h2>
                 <button type="button" onClick={() => setOpenModal(false)} aria-label="Fermer" className="text-gray-400 hover:text-gray-600">
