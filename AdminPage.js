@@ -35,8 +35,8 @@ export default function AdminPage() {
   const [badge, setBadge] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [nom, setNom] = useState('El Bakkali');
-  const [prenom, setPrenom] = useState('Yahya');
+  const [nom, setNom] = useState('');
+  const [prenom, setPrenom] = useState('');
   const [creating, setCreating] = useState(false);
   const [showUID, setShowUID] = useState({}); // toggle UID visibility per user
   const [showPassword, setShowPassword] = useState(false); // toggle password visibility
@@ -102,8 +102,8 @@ export default function AdminPage() {
       setBadge('');
       setPassword('');
       setConfirmPassword('');
-      setNom('El Bakkali');
-      setPrenom('Yahya');
+      setNom('');
+      setPrenom('');
       await fetchUsers();
     } catch (e) {
       setError(e.response?.data || 'Erreur lors de la création');
@@ -368,8 +368,8 @@ export default function AdminPage() {
               setBadge('');
               setPassword('');
               setConfirmPassword('');
-              setNom('El Bakkali');
-              setPrenom('Yahya');
+              setNom('');
+              setPrenom('');
               setOpenModal(true);
             }}
             className="flex items-center gap-2 px-4 py-2 bg-ramRed text-white rounded hover:bg-[#9d1222] transition"
