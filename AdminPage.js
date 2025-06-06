@@ -35,8 +35,8 @@ export default function AdminPage() {
   const [badge, setBadge] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [nom, setNom] = useState('');
-  const [prenom, setPrenom] = useState('');
+  const [nom, setNom] = useState('El Bakkali');
+  const [prenom, setPrenom] = useState('Yahya');
   const [creating, setCreating] = useState(false);
   const [showUID, setShowUID] = useState({}); // toggle UID visibility per user
   const [showPassword, setShowPassword] = useState(false); // toggle password visibility
@@ -102,8 +102,8 @@ export default function AdminPage() {
       setBadge('');
       setPassword('');
       setConfirmPassword('');
-      setNom('');
-      setPrenom('');
+      setNom('El Bakkali');
+      setPrenom('Yahya');
       await fetchUsers();
     } catch (e) {
       setError(e.response?.data || 'Erreur lors de la création');
@@ -364,7 +364,14 @@ export default function AdminPage() {
         <FadeInDiv delay={320} className="flex-shrink-0">
           <button
             type="button"
-            onClick={() => setOpenModal(true)}
+            onClick={() => {
+              setBadge('');
+              setPassword('');
+              setConfirmPassword('');
+              setNom('El Bakkali');
+              setPrenom('Yahya');
+              setOpenModal(true);
+            }}
             className="flex items-center gap-2 px-4 py-2 bg-ramRed text-white rounded hover:bg-[#9d1222] transition"
           >
             <PlusIcon className="h-5 w-5" /> Nouveau staff

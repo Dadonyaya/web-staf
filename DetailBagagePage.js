@@ -22,9 +22,14 @@ function FadeInDiv({ children, delay = 0, className = "" }) {
   );
 }
 
-export default function DetailBagagePage() {
-  const { id } = useParams();
+export default function DetailBagagePage({ id: propId, onClose }) {
+  const { id: routeId } = useParams();
   const navigate = useNavigate();
+  const id = propId || routeId;
+  const handleClose = () => {
+    if (onClose) onClose();
+    else navigate(-1);
+  };
   const [bagage, setBagage] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -50,7 +55,7 @@ export default function DetailBagagePage() {
   return (
     <div
       className="fixed inset-0 bg-black/40 flex items-center justify-center p-4 z-50 animate-fadeIn"
-      onClick={() => navigate(-1)}
+      onClick={handleClose}
       style={{ fontFamily: 'Montserrat, Arial, sans-serif' }}
     >
       <div
@@ -62,7 +67,7 @@ export default function DetailBagagePage() {
           <h1 className="text-[1.12rem] font-bold text-[#C4002A] tracking-tight uppercase" style={{ letterSpacing: '0.7px' }}>
             Détail du bagage
           </h1>
-          <button className="p-1 rounded hover:bg-gray-100" onClick={() => navigate(-1)} aria-label="Fermer">
+          <button className="p-1 rounded hover:bg-gray-100" onClick={handleClose} aria-label="Fermer">
             <XMarkIcon className="w-5 h-5 text-gray-400" />
           </button>
         </div>
