@@ -205,6 +205,7 @@ export default function AdminPage() {
             ) : staffUsers.length === 0 ? (
               <div>Aucun staff trouvé.</div>
             ) : (
+              <>
               <table className="w-full text-left text-gray-900 text-sm border-separate border-spacing-y-1">
                 <thead>
                   <tr className="border-b border-gray-300">
@@ -263,6 +264,7 @@ export default function AdminPage() {
                   <ChevronRightIcon className="h-5 w-5 ml-1 text-ramRed" />
                 </button>
               </div>
+              </>
             )}
           </section>
 
@@ -274,6 +276,7 @@ export default function AdminPage() {
             ) : normalUsers.length === 0 ? (
               <div>Aucun utilisateur trouvé.</div>
             ) : (
+              <>
               <table className="w-full text-left text-gray-900 text-sm border-separate border-spacing-y-1">
                 <thead>
                   <tr className="border-b border-gray-300">
@@ -336,6 +339,7 @@ export default function AdminPage() {
                   <ChevronRightIcon className="h-5 w-5 ml-1 text-ramRed" />
                 </button>
               </div>
+              </>
             )}
           </section>
         </FadeInDiv>
