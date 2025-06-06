@@ -365,8 +365,14 @@ export default function AdminPage() {
           </button>
         </FadeInDiv>
         {openModal && (
-          <div className="fixed inset-0 bg-black/40 flex items-center justify-center p-4 z-50 animate-fadeIn">
-            <div className="bg-white rounded-lg shadow-lg w-full max-w-lg p-8 max-h-[90vh] overflow-auto animate-fadeInUp">
+          <div
+            className="fixed inset-0 bg-black/40 flex items-center justify-center p-4 z-50 animate-fadeIn"
+            onClick={() => setOpenModal(false)}
+          >
+            <div
+              onClick={e => e.stopPropagation()}
+              className="bg-white rounded-xl shadow-2xl w-full max-w-lg p-8 md:p-10 max-h-[90vh] overflow-auto animate-fadeInUp"
+            >
               <div className="flex justify-between items-center mb-4">
                 <h2 className="text-lg font-semibold text-ramRed">Créer un compte Staff</h2>
                 <button type="button" onClick={() => setOpenModal(false)} aria-label="Fermer" className="text-gray-400 hover:text-gray-600">
