@@ -206,19 +206,23 @@ export default function AdminPage() {
               <div>Aucun staff trouvé.</div>
             ) : (
               <>
-              <table className="w-full text-left text-gray-900 text-sm border-separate border-spacing-y-1">
-                <thead>
-                  <tr className="border-b border-gray-300">
-                    <th className="py-2 px-4">Badge</th>
-                    <th className="py-2 px-4">Firebase UID</th>
-                  </tr>
-                </thead>
-                <tbody>
+              <div className="overflow-x-auto border border-[#ececec] bg-white animate-fadeIn rounded-none shadow-none">
+                <table className="min-w-full text-[15px] font-medium" style={{ fontFamily: 'Montserrat, Arial, sans-serif' }}>
+                  <thead>
+                    <tr
+                      className="font-bold uppercase text-xs tracking-wide select-none"
+                      style={{ background: '#C4002A', color: '#fff', userSelect: 'none', cursor: 'default' }}
+                    >
+                      <th className="px-4 py-3 text-left font-semibold whitespace-nowrap">Badge</th>
+                      <th className="px-4 py-3 text-left font-semibold whitespace-nowrap">Firebase UID</th>
+                    </tr>
+                  </thead>
+                  <tbody>
                   {paginatedStaff.map(u => (
                     <tr
                       key={u.uid}
-                      className="hover:bg-gray-100 cursor-default rounded"
-                      style={{ transition: "background-color 0.3s" }}
+                      className="border-b border-[#ececec] bg-white hover:bg-[#F8E6EA]/55 cursor-default transition-colors"
+                      style={{ transition: 'background 0.14s cubic-bezier(0.23, 1, 0.32, 1)' }}
                     >
                       <td className="py-2 px-4 truncate">{u.badge || u.email?.split('@')[0]}</td>
                       <td className="py-2 px-4 font-mono text-xs select-all relative">
@@ -241,8 +245,9 @@ export default function AdminPage() {
                       </td>
                     </tr>
                   ))}
-                </tbody>
-              </table>
+                  </tbody>
+                </table>
+              </div>
               <div className="flex justify-center items-center mt-4 gap-2">
                 <button
                   onClick={() => setStaffPage(p => Math.max(1, p - 1))}
@@ -277,21 +282,25 @@ export default function AdminPage() {
               <div>Aucun utilisateur trouvé.</div>
             ) : (
               <>
-              <table className="w-full text-left text-gray-900 text-sm border-separate border-spacing-y-1">
-                <thead>
-                  <tr className="border-b border-gray-300">
-                    <th className="py-2 px-4">Prénom</th>
-                    <th className="py-2 px-4">Nom</th>
-                    <th className="py-2 px-4">Email</th>
-                    <th className="py-2 px-4">Firebase UID</th>
-                  </tr>
-                </thead>
-                <tbody>
+              <div className="overflow-x-auto border border-[#ececec] bg-white animate-fadeIn rounded-none shadow-none">
+                <table className="min-w-full text-[15px] font-medium" style={{ fontFamily: 'Montserrat, Arial, sans-serif' }}>
+                  <thead>
+                    <tr
+                      className="font-bold uppercase text-xs tracking-wide select-none"
+                      style={{ background: '#C4002A', color: '#fff', userSelect: 'none', cursor: 'default' }}
+                    >
+                      <th className="px-4 py-3 text-left font-semibold whitespace-nowrap">Prénom</th>
+                      <th className="px-4 py-3 text-left font-semibold whitespace-nowrap">Nom</th>
+                      <th className="px-4 py-3 text-left font-semibold whitespace-nowrap">Email</th>
+                      <th className="px-4 py-3 text-left font-semibold whitespace-nowrap">Firebase UID</th>
+                    </tr>
+                  </thead>
+                  <tbody>
                   {paginatedUsers.map(u => (
                     <tr
                       key={u.uid}
-                      className="hover:bg-gray-100 cursor-default rounded"
-                      style={{ transition: "background-color 0.3s" }}
+                      className="border-b border-[#ececec] bg-white hover:bg-[#F8E6EA]/55 cursor-default transition-colors"
+                      style={{ transition: 'background 0.14s cubic-bezier(0.23, 1, 0.32, 1)' }}
                     >
                       <td className="py-2 px-4">{u.prenom}</td>
                       <td className="py-2 px-4">{u.nom}</td>
@@ -316,8 +325,9 @@ export default function AdminPage() {
                       </td>
                     </tr>
                   ))}
-                </tbody>
-              </table>
+                  </tbody>
+                </table>
+              </div>
               <div className="flex justify-center items-center mt-4 gap-2">
                 <button
                   onClick={() => setUserPage(p => Math.max(1, p - 1))}
